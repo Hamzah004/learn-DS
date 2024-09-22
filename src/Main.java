@@ -1,6 +1,7 @@
 import java.util.*;
 
 public class Main {
+
     public static void main(String[] args) {
 //        int[] m= new int[5];
 //        int[] k = {10,12,12,23};
@@ -19,7 +20,7 @@ public class Main {
 //        // array is like a bus that has max size of seats question
 //        for(int i:k)"
 //            System.out.println("the value is: "+i);
-
+/*
 
         ArrayList <Double> a = new ArrayList<>();
         ArrayList <Double> b = new ArrayList<>();
@@ -90,7 +91,7 @@ public class Main {
         for(int k:w)
             System.out.print("value: "+k+" ");
         // sort and search are mostly used in linear data structures
-
+/*
         //// search //////
 
         // sequential search: from the start of the list to the end of the list.
@@ -99,6 +100,7 @@ public class Main {
         // we use get method to access the value for the element.
         // we compare the key and the value for the elements in the list.
         // we keep comparing till we return true in the (if condition), we return false if the element is not found in the list.
+        /*
         ArrayList<Double> w1 = new ArrayList<>();
             w1.add(1.3);
             w1.add(2.3);
@@ -107,6 +109,7 @@ public class Main {
             w1.add(5.3);
         System.out.println();
         System.out.println(linSearch(w1,w1.size(),5.3));
+        */
         // binary search
         // it has less time complexity than sequential search
         // it's used when the list is sorted
@@ -367,12 +370,215 @@ That's how **Selection Sort** operates, focusing on finding the minimum element 
             ** the best one between these three is even though all of them are O(n^2): insertion, selection, bubble sort (in order).
     */
 
+    ///////////////////////////////// Stack and Queue ///////////////////////////////////////////////////
+        // array and array list are linear DS,and and the access on them is direct through out the index.
+        // now we'll talk about stack and queue, the access for them is sequential access.
+        // Stack is LIFO(Last-In First-Out).
+        // Queue
+        // any application that is about reversing could be done using stack.
+        // what are the operations on stack:
+        // for adding elements: use push method
+        // for accessing elements: use peak(which is the top elements in the stack and the only element that could be accessed).
+        // for deleting elements from the stack: use pop method. note that pop method will return the deleted element from the stack.
+        // so for example: stack.push(2), stack.push(3), int x= stack.pop(), the deleted value will be returned in the x which is 3.
+        // stack has only "single point of access " as i mentioned before.
+        // what will change the value of the stack(active methods) is push and pop, methods won't change the value of the stack peak(used only to access).
+        // you can't pop an empty stack(EmptyStackException)
+
+
+        /*
+        ### **What is a Stack?**
+
+A **stack** is a linear data structure that follows the **Last In, First Out (LIFO)** principle.
+This means that the last element added to the stack will be the first one to be removed. A stack can be visualized as a vertical collection of elements where insertion and deletion happen at the **same end**,
+ called the **top** of the stack.
+
+### **Basic Operations on a Stack**:
+1. **push(element)**: Adds an element to the top of the stack.
+2. **pop()**: Removes and returns the top element of the stack. Throws an error if the stack is empty.
+3. **peek() or top()**: Returns the top element without removing it.
+4. **isEmpty()**: Returns `true` if the stack is empty, `false` otherwise.
+5. **size()**: Returns the number of elements in the stack.
+
+### **How a Stack Works**:
+
+- **Push Operation**: When you push an element onto the stack, it is added to the top. The previous top element moves down, and the newly pushed element becomes the top.
+
+  Example:
+  ```
+  Stack: [ ]
+  push(5)
+  Stack: [5]
+  push(10)
+  Stack: [5, 10]
+  ```
+
+- **Pop Operation**: When you pop an element from the stack, the top element is removed, and the next element in line becomes the new top.
+
+  Example:
+  ```
+  Stack: [5, 10]
+  pop() -> returns 10
+  Stack: [5]
+  ```
+
+- **Peek Operation**: When you peek at the stack, you just check the top element without removing it.
+
+  Example:
+  ```
+  Stack: [5, 10]
+  peek() -> returns 10
+  Stack: [5, 10]  // no change
+
+### **Applications of Stack**:
+Stacks are widely used due to their LIFO property. Here are some real-world and computer science applications:
+
+1. **Function Call Management (Recursion)**: When a function is called, its local variables and return address are pushed onto the call stack. Once the function completes,
+the call stack is popped to return control to the previous function.
+
+   Example: A recursive function call structure.
+
+2. **Expression Evaluation**: Stacks are used to evaluate expressions in postfix notation (also known as Reverse Polish Notation). They are also used in converting infix expressions to postfix or prefix.
+
+   Example:
+   - Infix: `(A + B) * (C - D)`
+   - Postfix: `AB+CD-*`
+
+3. **Undo/Redo Operations**: Most text editors or applications use stacks to implement the "undo" and "redo" features.
+
+4. **Browser History**: Browsers use stacks to track history. When you press the back button, the last visited URL is popped from the stack.
+
+5. **Balanced Parentheses and Syntax Checking**: Stacks are useful to check if a string of parentheses, brackets, or braces is balanced.
+
+   Example: Checking if `((a + b) * (c + d))` has properly matched parentheses.
+
+6. **Depth-First Search (DFS) in Graphs and Trees**: DFS is implemented using stacks, either explicitly in code or implicitly via recursion.
+
+7. **Stack-Based Algorithms**: Several algorithms, such as those for finding the nearest smaller element, use stacks for efficient computation.
+
+### **Common Questions on Stacks**:
+
+1. **Evaluate a postfix expression**: Given a postfix expression like `52+83-*`, evaluate the result using a stack.
+
+2. **Check if parentheses are balanced**: Write a program that checks if the parentheses in a given string are balanced.
+
+   Example:
+   - Input: `({[]})`
+   - Output: `true`
+
+3. **Implement a stack using two queues**: Implement a stack data structure using two queues and ensure it operates with push and pop.
+
+4. **Find the next greater element**: Given an array, for each element, find the next greater element (on the right). If there is no greater element, return `-1`.
+
+   Example:
+   - Input: `[4, 5, 2, 25]`
+   - Output: `[5, 25, 25, -1]`
+
+5. **Reverse a stack**: Given a stack, reverse the elements using recursion or another stack.
+
+6. **Implement two stacks in an array**: Implement two stacks in a single array to maximize space utilization.
+
+### **How It Works**:
+1. **push()**: Adds an element to the end of the list (which represents the top of the stack).
+2. **pop()**: Removes and returns the last element in the list (the top element).
+3. **peek()**: Returns the last element without removing it.
+4. **isEmpty()**: Checks if the stack is empty by checking if the list is empty.
+5. **size()**: Returns the number of elements in the stack.
+
+### **Advanced Stack Questions**:
+1. **Implement a Min Stack**: Create a stack that, in addition to `push` and `pop`, also provides a `getMin()` method that returns the minimum element in constant time.
+
+2. **Sort a Stack**: Write a function that takes a stack and sorts it in ascending order using only stacks (you may use additional stacks or recursion).
+
+3. **Reverse a Linked List using Stack**: Given a singly linked list, reverse it using a stack.
+
+---
+
+### **Stack Time Complexity**:
+- **Push**: O(1) (constant time) because you only add an element to the top.
+- **Pop**: O(1) because you remove the top element.
+- **Peek**: O(1) because you are just checking the top element.
+
+### **Conclusion**:
+A stack is a fundamental data structure that has a wide range of applications, from parsing expressions to managing function calls.
+Its simple LIFO property makes it easy to implement but powerful in solving various algorithmic problems.
+ Mastering stack operations and their applications is essential for solving many common data structure and algorithm questions.
+
+ */
+
+
+// today's goal is to reach lecture 21
+
+/*
+//        Scanner scan = new Scanner(System.in);
+//        System.out.print("enter value1:");
+//        Object value1 = scan.nextLine();
+//        System.out.print("enter value2:");
+//        Object value2 = scan.nextLine();
+//        try{
+//            value1 = Double.parseDouble(value1.toString());
+//            value2 = Double.parseDouble(value2.toString());
+//        }
+//        catch (NumberFormatException ignored) {
+//             }
+//        sum(value1, value2);
+//
+//
+//
+//
+//
+//        // using generics Object creation
+//        MC<?,?> m = new MC<>("da", "dad");
+//        MC<String,Double> m1 = new MC<>("da", 21.21);
+//        MC<Integer,String> m2 = new MC<>(1, "ew");
+//        System.out.println(m.d());
+//        System.out.println(m1.d());
+//        System.out.println(m2.d());
+//
+
+ */
+        // stack example
+        MyStack<String> myStack = new MyStack<>();
+        myStack.push("hamzah");
+        myStack.push("rema");
+        myStack.push("ruba");
+        myStack.push("rami");
+        myStack.push("sami");
+        myStack.push("fadi");
+        myStack.push("fuad");
+        myStack.push("saleh");
+        System.out.println(myStack.peek());
+        System.out.println(myStack.size());
+        String popValue = myStack.canPop();
+        System.out.println(popValue);
+        System.out.println(myStack.peek());
+        System.out.println(myStack.size());
+        System.out.println(myStack);
 
 
     }
+    static class MC<T,R>{
+        T a;
+        R b;
 
+        public MC(T a, R b) {
+            this.a = a;
+            this.b = b;
+        }
+        T d(){
+            return a;
+        }
+    }
+
+    static <T>void sum(T a,T b){
+        if(a instanceof Number num1 && b instanceof Number num2){
+            System.out.println(num1.doubleValue() + num2.doubleValue());
+        } else if (a instanceof String str1 && b instanceof String str2) {
+            System.out.println(str1 + str2);
+        }
+    }
     // linear search(sequential search) algorithm
-    public static <T extends Comparable<T>> int linSearch(ArrayList<T> list, int length, T key){
+    public static <T extends Comparable<T>> int linSearch(ArrayList<T> list, int length, T key) {
         int loc;
         for (loc = 0; loc < length; loc++) { // n
             if(list.get(loc).compareTo(key) == 0){ // 1
@@ -426,6 +632,38 @@ That's how **Selection Sort** operates, focusing on finding the minimum element 
                 System.out.println("This list is not sorted");
             }
         }
-}
 
 
+        }
+        // stack implementation based on ArrayList
+ class MyStack<T>{
+    private final ArrayList<T> stack;
+
+    public MyStack() {
+        this.stack = new ArrayList<>();
+    }
+    public void push(T value){
+        stack.add(value);
+    }
+
+    public T canPop(){
+        if(!stack.isEmpty())
+            return stack.removeLast();
+        else
+            throw new EmptyStackException();
+    }
+    public T peek(){
+        if(!stack.isEmpty())
+            return stack.getLast();
+        else
+            throw new EmptyStackException();
+    }
+    public int size(){
+        return stack.size();
+    }
+
+     @Override
+     public String toString() {
+         return "stack elements: "+stack;
+     }
+ }
