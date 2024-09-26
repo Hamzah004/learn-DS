@@ -1,3 +1,4 @@
+import java.lang.reflect.Array;
 import java.util.*;
 
 public class Main {
@@ -555,9 +556,136 @@ Its simple LIFO property makes it easy to implement but powerful in solving vari
         System.out.println(myStack.size());
         System.out.println(myStack);
 
+        Stack<String> stack = new Stack<>();
+        stack.push("a");
+        stack.push("b");
+        stack.push("c");
+        stack.push("d");
+        while (!stack.isEmpty()){
+            System.out.print(stack.pop());
+        }
+/////////////////////////////////////////
 
+    // Stack Applications: Delimiter Matching
+        /*
+        how that works:
+        **Delimiter Matching** is a common application of stacks, used to check whether opening and closing delimiters (like parentheses, brackets, braces)
+        are correctly matched in a string or expression. This ensures that symbols like `()`, `{}`, and `[]` are used in the correct order.
+
+### Step-by-Step Explanation of Delimiter Matching
+
+#### Problem:
+We are given a string that contains delimiters (parentheses, braces, and brackets) mixed with other characters. We need to ensure that:
+- Every opening delimiter (like `(`, `{`, `[`) has a corresponding and correctly placed closing delimiter (like `)`, `}`, `]`).
+- The delimiters are correctly nested (e.g., `({[]})` is valid, but `([)]` is invalid).
+
+#### Example:
+Consider the string:
+`"{[()]}"`
+This string is correctly matched, while
+`"{[(])}"` is not.
+
+### Approach Using a Stack
+
+1. **Initialize an Empty Stack:**
+     - We will use a stack to keep track of the opening delimiters.
+
+2. **Iterate Through Each Character of the String:**
+     - If the character is an **opening delimiter** (`(`, `{`, `[`), push it onto the stack.
+     - If the character is a **closing delimiter** (`)`, `}`, `]`), check if it matches the **top** of the stack:
+     - If the top of the stack has the corresponding opening delimiter, pop the stack (i.e., remove the matched opening delimiter).
+     - If the stack is empty or the top of the stack does not match the closing delimiter, the string is **not balanced**.
+
+3. **At the End of the String:**
+   - If the stack is **empty**, it means all delimiters were matched correctly.
+   - If the stack still contains any opening delimiters, the string is **not balanced**.
+
+### Step-by-Step Example
+
+Let's take an example string:
+`"{[()]}"`
+- Initialize an empty stack: `[]`.
+
+#### Iteration 1: `{`
+- Encounter `{`, which is an opening delimiter.
+- Push it onto the stack:
+  Stack: `[{]`
+
+#### Iteration 2: `[`
+- Encounter `[`, another opening delimiter.
+- Push it onto the stack:
+  Stack: `[{, []`
+
+#### Iteration 3: `(`
+- Encounter `(`, another opening delimiter.
+- Push it onto the stack:
+  Stack: `[{, [, (]`
+
+#### Iteration 4: `)`
+- Encounter `)`, which is a closing delimiter.
+- Check the top of the stack (which is `(`), and it matches the closing `)`.
+- Pop the stack:
+  Stack: `[{, []`
+
+#### Iteration 5: `]`
+- Encounter `]`, which is a closing delimiter.
+- Check the top of the stack (which is `[`), and it matches the closing `]`.
+- Pop the stack:
+  Stack: `[{]`
+
+#### Iteration 6: `}`
+- Encounter `}`, which is a closing delimiter.
+- Check the top of the stack (which is `{`), and it matches the closing `}`.
+- Pop the stack:
+  Stack: `[]`
+
+At the end, the stack is empty, meaning all delimiters were matched correctly.
+
+### Incorrect Example: `"{[(])}"`
+
+Let's take an incorrect string:
+`"{[(])}"`
+
+#### Iteration 1: `{`
+- Push `{` onto the stack:
+  Stack: `[{]`
+
+#### Iteration 2: `[`
+- Push `[` onto the stack:
+  Stack: `[{, []`
+
+#### Iteration 3: `(`
+- Push `(` onto the stack:
+  Stack: `[{, [, (]`
+
+#### Iteration 4: `]`
+- Encounter `]`, a closing delimiter.
+- Check the top of the stack (which is `(`), and it **does not match** the closing `]`.
+- **Mismatch detected**: The string is **not balanced**.
+         */
+
+        // MatchingDelimiter method example:
+        Scanner scanner = new Scanner(System.in);
+//        System.out.println("enter expression: ");
+//        String expression = scanner.nextLine();
+//        System.out.println("is it matched? "+ MatchingDelimiter.isBalanced(expression));
     }
+
+    // second Stack Application is infix to postfix conversion
+
+    // infix (x + y) when the operator is between the expressions
+    // postfix xy+ when the operator is after the expressions
+    // prefix +xy when the operator is before the expressions
+    // how to works:
+    // we have operands and operators
+    // if we have a operand we send it to the output instantly
+    // if we have a operator we push it to the stack, in condition that the stack is empty or the operator in the stack has lower priority.
+    // if i have a opening delimiter push it to the stack, and if i have closing delimiter pop the elements in the stack till we get to the opening delimiter.
+    // example: 5 + 6
+    // stack: +(pushed to the stack and popped in the end)
+    // output: 5 6 + (final result)
     static class MC<T,R>{
+
         T a;
         R b;
 
@@ -637,7 +765,7 @@ Its simple LIFO property makes it easy to implement but powerful in solving vari
         }
         // stack implementation based on ArrayList
  class MyStack<T>{
-    private final ArrayList<T> stack;
+            private final ArrayList<T> stack;
 
     public MyStack() {
         this.stack = new ArrayList<>();
@@ -665,5 +793,30 @@ Its simple LIFO property makes it easy to implement but powerful in solving vari
      @Override
      public String toString() {
          return "stack elements: "+stack;
+
      }
  }
+    // MatchingDelimiters application implementation
+ class MatchingDelimiter {
+     public static boolean isBalanced(String expression) {
+         Stack<Character> stack = new Stack<>();
+
+         for (char element : expression.toCharArray()) {
+             if (element == '(' || element == '[' || element == '{') {
+                 stack.push(element);
+             } else if (element == ')' || element == ']' || element == '}') {
+                 if (stack.isEmpty()) {
+                     return false;
+                 }
+                 char top = stack.pop();
+                 if (!isMatching(top, element))
+                     return false;
+             }
+         }
+         return stack.isEmpty();
+     }
+     public static boolean isMatching(char openD, char closedD) {
+         return (openD == '(' && closedD == ')') || (openD == '{' && closedD == '}') || (openD == '[' && closedD == ']');
+     }
+ }
+
