@@ -564,6 +564,7 @@ Its simple LIFO property makes it easy to implement but powerful in solving vari
         while (!stack.isEmpty()){
             System.out.print(stack.pop());
         }
+        System.out.println();
 /////////////////////////////////////////
 
     // Stack Applications: Delimiter Matching
@@ -669,21 +670,106 @@ Let's take an incorrect string:
 //        System.out.println("enter expression: ");
 //        String expression = scanner.nextLine();
 //        System.out.println("is it matched? "+ MatchingDelimiter.isBalanced(expression));
+
+        // second Stack Application is infix to postfix conversion
+
+        // infix (x + y) when the operator is between the expressions
+        // postfix xy+ when the operator is after the expressions
+        // prefix +xy when the operator is before the expressions
+        // how to works:
+        // we have operands and operators
+        // if we have a operand we send it to the output instantly
+        // if we have a operator we push it to the stack, in condition that the stack is empty or the operator in the stack has lower priority.
+        // if i have a opening delimiter push it to the stack, and if i have closing delimiter pop the elements in the stack till we get to the opening delimiter.
+        // example: 5 + 6
+        // stack: +(pushed to the stack and popped in the end)
+        // output: 5 6 + (final result)
+
+
+        ///////////// Queue(FIFO) First-in-First-Out///////////////////
+/*
+A **queue** is a linear data structure that follows the **FIFO** (First In, First Out) principle. This means that the first element inserted into the queue is the first one to be removed.
+The operations typically supported by a queue are **insertion (enqueue)** at the rear and **deletion (dequeue)** from the front.
+
+### **1. How the Queue Works:**
+the queue we have is a **circular queue** implemented using an array. In this design:
+
+- **`front`** points to the first element of the queue (the element that will be removed next).
+- **`rear`** points to the last element inserted into the queue.
+- When inserting an element, it is added at the rear.
+- When removing an element, it is removed from the front.
+- When the rear reaches the end of the array, it "wraps around" to the beginning using the modulo operation (`%`), making it a **circular queue**.
+
+### **2. Types of Access in a Queue:**
+- **Enqueue (Insert):** Adds an element to the rear of the queue.
+- **Dequeue (Remove):** Removes an element from the front of the queue.
+- **Peek Front:** Allows access to the front element without removing it.
+- **Peek Rear:** Allows access to the rear element without removing it.
+
+### **3. Applications of a Queue:**
+Queues are widely used in various domains, primarily due to their **FIFO** nature. Some examples include:
+
+- **Job Scheduling**: In operating systems, tasks/jobs are scheduled in a queue to ensure fair processing.
+- **Printing Queues**: In a printing system, print jobs are managed in a queue, ensuring that the first document submitted gets printed first.
+- **Breadth-First Search (BFS)**: In graph traversal algorithms, BFS uses a queue to explore nodes level by level.
+- **Customer Service**: In real-life applications, such as call centers or service centers, customers are served in a queue (first come, first served).
+- **Network Buffers**: Packets in a network switch or router are stored in queues before being processed.
+
+### **4. Circular Queue:**
+the implementation is an example of a **circular queue**, where:
+- **Front** and **Rear** pointers move circularly within a fixed-size array.
+- The use of modulo arithmetic ensures that the queue wraps around when the rear or front reaches the end of the array.
+
+### **5. Key Characteristics of a Queue:**
+- **FIFO Access**: The first element inserted is the first element removed.
+- **Limited Access**: Only the front element is accessible for removal, and only the rear element is accessible for insertion.
+- **Fixed Size**: In your case, the queue has a fixed maximum size (`maxSize`), beyond which elements cannot be added without removing existing ones.
+
+### **6. Important Operations in the Code:**
+
+- **Insert (Enqueue)**:
+  - `rear = (rear + 1) % maxSize;` ensures the rear wraps around the array when it reaches the end.
+  - The element is added at the position of `rear`.
+  - The number of elements is incremented.
+
+- **Remove (Dequeue)**:
+  - The element at the front is removed.
+  - `front = (front + 1) % maxSize;` ensures the front wraps around when it reaches the end of the array.
+  - The number of elements is decremented.
+
+### **7. Circular Queue Advantages:**
+- **Efficient Space Utilization**: Circular queues make full use of the array’s space by reusing positions once elements are dequeued.
+- **No Shifting Elements**: Unlike linear queues implemented with arrays, where shifting elements may be required after each dequeue, circular queues avoid this overhead.
+
+### **Common Questions on Queues**:
+1. **How does a queue work internally, and why is it different from a stack?**
+   - A queue works based on FIFO, where elements are added at one end and removed from another, unlike a stack that uses LIFO (Last In, First Out).
+
+2. **What happens when you try to enqueue into a full queue?**
+   - In your implementation, it prints a message indicating the queue is full, but in some cases, you can implement dynamic resizing.
+
+3. **What are the real-world applications of queues?**
+   - Used in various fields such as scheduling tasks, buffering network packets, and in simulations of real-world processes like service systems.
+         */
+
+        //// Queue Example:
+        Queue queue = new Queue(5);
+        // queue.remove();
+        System.out.println(queue); // Queue{maxSize=5, front=0, rear=-1, arrayQueue=[0, 0, 0, 0, 0], numberOfElements=0}
+        queue.insert(1);
+        queue.insert(2);
+        queue.insert(3);
+        queue.insert(4);
+        queue.insert(5);
+        System.out.println(queue); // Queue{maxSize=5, front=0, rear=4, arrayQueue=[1, 2, 3, 4, 5], numberOfElements=5}
+        long removedElement = queue.remove(); // returned value is 1, which is the front of the line(FIFO)
+        System.out.println(removedElement); // 1
+        queue.remove(); // 2
+        System.out.println(queue); // Queue{maxSize=5, front=2, rear=4, arrayQueue=[1, 2, 3, 4, 5], numberOfElements=3}
+        System.out.println(queue.peekFront()); // 3
+        System.out.println(queue.peekRear()); // 5
     }
 
-    // second Stack Application is infix to postfix conversion
-
-    // infix (x + y) when the operator is between the expressions
-    // postfix xy+ when the operator is after the expressions
-    // prefix +xy when the operator is before the expressions
-    // how to works:
-    // we have operands and operators
-    // if we have a operand we send it to the output instantly
-    // if we have a operator we push it to the stack, in condition that the stack is empty or the operator in the stack has lower priority.
-    // if i have a opening delimiter push it to the stack, and if i have closing delimiter pop the elements in the stack till we get to the opening delimiter.
-    // example: 5 + 6
-    // stack: +(pushed to the stack and popped in the end)
-    // output: 5 6 + (final result)
     static class MC<T,R>{
 
         T a;
@@ -817,6 +903,66 @@ Let's take an incorrect string:
      }
      public static boolean isMatching(char openD, char closedD) {
          return (openD == '(' && closedD == ')') || (openD == '{' && closedD == '}') || (openD == '[' && closedD == ']');
+     }
+ }
+
+    // Circular Queue Implementation
+ class Queue{
+    private final int maxSize;
+    private int front;
+    private int rear;
+    private final long[] arrayQueue;
+    private int numberOfElements;
+
+     public Queue(int size) {
+        maxSize = size;
+        arrayQueue = new long[maxSize];
+        front = 0;
+        rear = -1;
+        numberOfElements = 0;
+     }
+     public void insert(long element){
+         if(isFull()){
+             System.out.println("Queue is full");
+             return;
+         }
+         rear = (rear + 1) % maxSize;
+         arrayQueue[rear] = element;
+        numberOfElements++;
+     }
+
+     public long remove(){
+                if(isEmpty()){
+                    throw new IllegalStateException("Queue is empty");
+                }
+                long element = arrayQueue[front];
+                front = (front + 1) % maxSize;
+                numberOfElements--;
+
+                return element;
+
+     }
+     public long peekFront(){
+         return arrayQueue[front];
+     }
+     public long peekRear(){
+         return arrayQueue[rear];
+     }
+     public boolean isEmpty(){
+         return numberOfElements == 0;
+     }
+     public boolean isFull(){
+         return numberOfElements == maxSize;
+     }
+     @Override
+     public String toString() {
+         return "Queue{" +
+                 "maxSize=" + maxSize +
+                 ", front=" + front +
+                 ", rear=" + rear +
+                 ", arrayQueue=" + Arrays.toString(arrayQueue) +
+                 ", numberOfElements=" + numberOfElements +
+                 '}';
      }
  }
 
