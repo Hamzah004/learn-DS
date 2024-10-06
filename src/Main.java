@@ -1,6 +1,4 @@
-import java.lang.reflect.Array;
 import java.util.*;
-
 public class Main {
 
     public static void main(String[] args) {
@@ -93,7 +91,7 @@ public class Main {
             System.out.print("value: "+k+" ");
         // sort and search are mostly used in linear data structures
 /*
-        //// search //////
+        //////////////////////// search //////////////////////////////////////////////////////////////////////
 
         // sequential search: from the start of the list to the end of the list.
         // we have an index and key which is the value.
@@ -174,7 +172,9 @@ public class Main {
 
 ///////////////////////////////////////////////////////////////
      Selection Sort:
-     **Selection Sort** is a simple comparison-based sorting algorithm. It works by repeatedly selecting the smallest (or largest, depending on the sort order) element from the unsorted part of the array and swapping it with the first unsorted element. This process divides the array into two parts: the sorted part and the unsorted part, and gradually grows the sorted portion.
+     **Selection Sort** is a simple comparison-based sorting algorithm.
+     It works by repeatedly selecting the smallest (or largest, depending on the sort order) element from the unsorted part of the array and swapping it with the first unsorted element.
+     This process divides the array into two parts: the sorted part and the unsorted part, and gradually grows the sorted portion.
 
 ### Steps to Perform **Selection Sort**:
 
@@ -508,8 +508,6 @@ Its simple LIFO property makes it easy to implement but powerful in solving vari
  */
 
 
-// today's goal is to reach lecture 21
-
 /*
 //        Scanner scan = new Scanner(System.in);
 //        System.out.print("enter value1:");
@@ -768,10 +766,75 @@ the implementation is an example of a **circular queue**, where:
         System.out.println(queue); // Queue{maxSize=5, front=2, rear=4, arrayQueue=[1, 2, 3, 4, 5], numberOfElements=3}
         System.out.println(queue.peekFront()); // 3
         System.out.println(queue.peekRear()); // 5
+
+        /*
+        //LinkedList
+         note: each Link has a pointer to the next Link.
+         LinkedList Links(nodes or elements) are not stored in the memory next to each-other.
+         LinkedList is a linear data structure means the access to it is linear.
+         there is an actual deletion and insertion to it Unlike the array.
+         it's not fixed sized means you can add as many elements as you want.
+         last Link pointer is null. and first link address(pointer) is stored in another place.
+         what is a Link?? the Link is the node that has two parts: 1. the data and 2. the pointer to the next Link.
+         the arrow between each Link and the other is called "next".
+         don't change the first or the next instead use a temp pointer.
+        */
+
+        //// how to insert new Link(node) to a LinkedList.
+        // at first create a new Link for example Link n.
+        // next let the pointer for n point to  the first node in the LinkedList by doing, n.next  = first
+        // then you make first pointer point to n.
+        // by that you made n point to the first node (which is second now after we inserted n, and mad the first pointer point to n which made it the first Link(node) in the LinkedList).
+
+        //// how to delete first Link in the LinkedList
+        // let the first pointer point to the first.next, with making sure the firs.next does not equal to null.
+
+        //// how to search in the LinkedList
+        // the search in the LinkedList start form the beginning
+        // compare the current.data(the current is the temp we use to access the Nodes, and we use the current.data to access the Link(node) data) with the key.
+        // in this case we are using linear search.
+        System.out.print("Enter Number: ");
+        int number = scanner.nextInt();
+        System.out.println("The sum for numbers from 0 to "+number+" is: "+sum(number));
+        System.out.println("the factorial for "+number+" is: "+factorial(number));
+        System.out.println("fibonacci: "+fibonacci(number));
     }
 
-    static class MC<T,R>{
+    // recursion example:
+    public static int sum(int n){
+        System.out.println("n = "+n);
+        if(n == 1){
+            return 1;
+        }
+        else {
+            int k = n + sum(n-1);
+            System.out.println("the sum is "+k+" now");
+            return k;
+        }
+    }
+    // another recursion example(factorial):
+    public static int factorial(int n){
+        if(n == 0){
+            return 1;
+        }
+        else {
+            return n * factorial(n-1);
+        }
+    }
+    // time complexity for this method is O(n!) which is a very bad time complexity.
+    // another recursion example(fibonacci):
+    public static int fibonacci(int n){
+        System.out.println(n);
+        if(n == 0 || n == 1){
+            return 1;
+        }
+        else {
+            return fibonacci(n-1) + fibonacci(n-2);
+        }
+    }
+    // fibonacci time complexity is: O(n^2), every time you rise the number of n by 1, the number of cases will rise the double.
 
+    static class MC<T,R>{
         T a;
         R b;
 
@@ -834,7 +897,7 @@ the implementation is an example of a **circular queue**, where:
     // Number of comparisons = [log2(n)]+1
     // time complexity: O(log n to the base 2)
     public static <T extends Comparable<T>> boolean isSorted(ArrayList<T> list){
-        for (int i = 0; i < list.size()-1; i++) { // (0,1),(1,2),(2,3),(3,4),(4,5)
+        for (int i = 0; i < list.size()-1; i++) { // (0,1),(1,2),(2,3),(3,4),(4,5) // let say length is 4 then we have 4 comparisons // n-1 comparisons
             if(list.get(i).compareTo(list.get(i+1)) > 0){
                 return false;
             }
@@ -846,8 +909,6 @@ the implementation is an example of a **circular queue**, where:
                 System.out.println("This list is not sorted");
             }
         }
-
-
         }
         // stack implementation based on ArrayList
  class MyStack<T>{
@@ -965,4 +1026,292 @@ the implementation is an example of a **circular queue**, where:
                  '}';
      }
  }
+
+ // insert first is O(1)
+// insert last is also O(1) if the last is existed
+// if the last is not existed it will be O(n) since it will go through all the elements in the LinkedList.
+// delete the key is O(n) because it will require a search method and the search is linear O(n)
+// we can't use something like Binary search because we don't have direct access to the elements in the LinkedList like the array and the ArrayList for example.
+// displayBackward() is also O(n)
+// insertAfter() is a method used to insert a node after some other node, it takes two parameters, (the position for the node we will insert after, the data for the element we are inserting).
+
+// recursion
+// if we want to write a recursive program, you need to have these two things
+// at first change the data set
+// at second have a base case, the base case the case that we stop the recursion on.
+////////////////////
+
+
+// TOH(tower of hanoi)
+// we have three towers
+// source tower, temporary tower, and distinction tower
+// now we have a number of disks in the source tower, and the goal is to move them to the distinction tower
+// we have tow rules:
+// moving one disk at a time.
+// no larger disk in top of smaller disk.
+// the base case when having one disk only.
+//// this is the algo:
+// move n-1 disks to T. // means if we had four disks, move 3 to the Temporary disk, and move the one in the Source to D, then move the n-1 disks to the Source.
+// move move disk n  to D.
+// move n-1 to D.
+// the number of moves for n is (2^n -1)
+// the time complexity for tower of hanoi is O(2^n) the same as fibonacci, every time we increase n the number of movements required increases
+
+
+// merge sort
+/*
+Sure! **Merge Sort** is a widely used sorting algorithm that follows the **divide and conquer** paradigm. Here's a detailed explanation of how it works, its steps, time complexity, and important points.
+
+### **What is Merge Sort?**
+
+Merge Sort is a comparison-based sorting algorithm that divides an array or list into two halves, sorts each half, and then merges the sorted halves back together. It is efficient for large datasets and guarantees a worst-case time complexity of \(O(n \log n)\).
+
+### **How Merge Sort Works:**
+
+**Steps Involved:**
+
+1. **Divide**:
+   - If the array has one or zero elements, it is already sorted. Otherwise, divide the array into two halves.
+
+2. **Conquer**:
+   - Recursively apply Merge Sort to both halves of the array.
+
+3. **Combine (Merge)**:
+   - Merge the two sorted halves back into a single sorted array.
+
+### **Visual Representation:**
+Let's say we have an array `[38, 27, 43, 3, 9, 82, 10]`.
+
+1. **Divide**:
+   ```
+   [38, 27, 43, 3, 9, 82, 10]
+      /              \
+   [38, 27, 43]   [3, 9, 82, 10]
+     /    \          /       \
+   [38]   [27, 43] [3, 9]   [82, 10]
+            /  \      /  \
+         [27] [43]  [3] [9]
+   ```
+
+2. **Conquer**:
+   After recursively sorting each half:
+   ```
+   [27, 38, 43]   [3, 9, 10, 82]
+   ```
+
+3. **Combine (Merge)**:
+   Merging the two sorted halves:
+   ```
+   [3, 9, 10, 27, 38, 43, 82]
+   ```
+
+### **Merge Function:**
+The merging of two sorted arrays is done in linear time. Here’s a brief outline of how the merge function works:
+
+- Compare the first elements of both arrays.
+- Place the smaller element in the new array.
+- Move to the next element in the array from which the smaller element was taken.
+- Repeat until all elements from both arrays are merged.
+
+### **Time Complexity:**
+- **Best Case**: \(O(n \log n)\)
+- **Average Case**: \(O(n \log n)\)
+- **Worst Case**: \(O(n \log n)\)
+
+### **Space Complexity:**
+- Merge Sort requires additional space for temporary arrays used during the merge process, leading to a space complexity of \(O(n)\).
+
+### **Advantages of Merge Sort:**
+1. **Stable**: Merge Sort maintains the relative order of records with equal keys.
+2. **Works Well with Large Datasets**: It is efficient for sorting large amounts of data, especially when dealing with linked lists.
+3. **Guaranteed Performance**: It has a predictable time complexity of \(O(n \log n)\).
+
+### **Disadvantages of Merge Sort:**
+1. **Space Complexity**: It requires extra space for the temporary arrays, making it less memory efficient compared to in-place algorithms like Quick Sort.
+2. **Overhead of Recursion**: Recursive calls can lead to overhead, particularly for large datasets.
+
+### **Implementation in Java:**
+Here’s a simple implementation of Merge Sort in Java:
+```java
+public class MergeSort {
+
+    public void merge(int[] array, int left, int mid, int right) {
+        // Calculate sizes of the subarrays
+        int n1 = mid - left + 1;
+        int n2 = right - mid;
+
+        // Create temporary arrays
+        int[] L = new int[n1];
+        int[] R = new int[n2];
+
+        // Copy data to temporary arrays
+        for (int i = 0; i < n1; i++) {
+            L[i] = array[left + i];
+        }
+        for (int j = 0; j < n2; j++) {
+            R[j] = array[mid + 1 + j];
+        }
+
+        // Merge the temporary arrays
+        int i = 0, j = 0;
+        int k = left;
+        while (i < n1 && j < n2) {
+            if (L[i] <= R[j]) {
+                array[k] = L[i];
+                i++;
+            } else {
+                array[k] = R[j];
+                j++;
+            }
+            k++;
+        }
+
+        // Copy remaining elements of L[] if any
+        while (i < n1) {
+            array[k] = L[i];
+            i++;
+            k++;
+        }
+
+        // Copy remaining elements of R[] if any
+        while (j < n2) {
+            array[k] = R[j];
+            j++;
+            k++;
+        }
+    }
+
+    public void sort(int[] array, int left, int right) {
+        if (left < right) {
+            int mid = (left + right) / 2;
+
+            // Sort first and second halves
+            sort(array, left, mid);
+            sort(array, mid + 1, right);
+
+            // Merge the sorted halves
+            merge(array, left, mid, right);
+        }
+    }
+
+    public static void main(String[] args) {
+        MergeSort ms = new MergeSort();
+        int[] array = {38, 27, 43, 3, 9, 82, 10};
+        ms.sort(array, 0, array.length - 1);
+
+        System.out.println("Sorted array: ");
+        for (int i : array) {
+            System.out.print(i + " ");
+        }
+    }
+}
+```
+
+### **Important Points:**
+- **Divide and Conquer**: Understanding this principle is crucial to grasping how Merge Sort operates.
+- **Recursive vs. Iterative**: While the standard implementation is recursive, it can also be implemented iteratively, which can save space for large datasets.
+- **Real-World Applications**: Merge Sort is often used in applications where stability is a requirement, such as sorting linked lists or large files that don't fit into memory.
+
+Feel free to ask if you have more questions about Merge Sort or any related topics!
+ */
+
+
+
+
+
+
+//// HashTables
+// hash table is an array
+// hash function takes a key, and return the index
+// hash function should be random
+// some of the ways to make a hash
+// we add values using the hash function and we search for values using also the hash function
+// for example we can you a way called mid squareszM
+// this works by taking the square for the key, and then for example taking the middle number of the result
+// if we have 12, we say 12^2 = 144, then we have 4 which is the
+// other way for hashing is digit folding, it's done by taking the sum for the digits
+// for example:  12/2/2000 the sum is: 1+2+2+2+0+0+0 = 9
+// let say we deleted a value from it will store -1
+
+// we  have three ways to handle collisions:
+// linear probing, quadratic probing, separate chaining
+
+//// at first linear probing
+// if you're using open addressing you'll have collisions
+// how it works:
+// find the closest empty place in the HashTable and save the value in.
+// the HashTable is circular.
+// when searching in a HashTable, when to know the element is not in the HashTable?, when you reach to an empty palace.
+// all HashTable operations start with calculating the hash function.
+
+//// in trees, number of edges = number of nodes - 1
+// trees can't have cycles
+// it's close to LinkedList
+// the root is the starting point for the tree
+// binary tree at most(maybe less) have two edges that connect nodes to each other
+// if a tree  have a node that hase more than two edges, it's called multiway tree.
+// grandParent is when you have
+
+
+
+// binary search tree
+/*
+1. all the node values on the right are greater than the nodes on the left.
+2. the root is greater that the left child and less than the right child.
+
+if any value does not apply to this rules, it won't be a binary search tree anymore
+ */
+
+// searching
+//  start the comparisons form the root
+// if equals the key, true, and end the search
+// if key greater than the node go to the right
+// if less than the node go to the left
+// the longest path to the leaf, or the the greatest number of operations needed to find a value is: the "number" of levels.(for example a tree from level 3(0,1,2,3), the max is 4).
+// binary tree is mostly beneficial when the tree is balanced.
+// time complexity for all operations in binary search tree is: O(log n to the base 2)
+// traversing a tree means that you visit all the nodes in a tree and it's done in several ways:
+// InOrder(left, root, right), and this will give us ascending order.
+// in this way far left is the smallest value in the tree, and the far right is the greatest value in the tree.
+// if we make it (right, root, left) it will become in a descending order.
+// PreOrder(root, left , right)
+
+// graphs
+// tree is a graph but without a cycle
+// one of the most important applications: networking, and maps.
+// the element in a graph is called vertices, and the relationship between vertices is called Edges.
+
+// adjacency when the edge connect two vertices directly.
+// the neighbors for vertices is the one that are connect with direct edge.
+// the edge is considered to be two nodes that have direct like between them.
+// for example: IJ is an edge.
+// now what a path is? it's a number of edges that move me from a place to another.
+
+// you need to know wither your graph is BiDirectional, or UniDirectional, and wither it's connected, or not connected.
+// note that if your graph was directed and you want to make some edge Uni, you need to make two edges form the edge and to the edge the edge.
+// we use the same arrow if the path is the same between the two vertices(from A to B and from B to A back and forth for example).
+// but if it's not the same path(from A to B and from B to A back and forth for example) you use two.
+
+// how can I traversal in graphs??
+// we have these two method, DFS and BFS.
+
+// in DFS you choose a starting point, you choose a path, and you walk in this path until you reach a dead point.
+// when we reach a dead point, we go back with the nodes, when we reach the starting point one more time we choose another path.
+// DFS is like the stack some how in it's process.
+// we can have more than one DFS for the same graph.
+
+// now let's go to the BFS, when we are on some node, we need to visit all the neighbors.
+// then you go to the neighbors and add their neighbors in the same order they were added to the queue. (check the slides)
+// remember that BFS is an Application for Queue.
+// it works like levels.
+
+
+
+
+
+
+
+
+
+
 
